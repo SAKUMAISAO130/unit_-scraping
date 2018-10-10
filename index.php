@@ -1,4 +1,35 @@
 <?php
+
+
+
+/*
+* モデル読み込み
+*/
+require_once('./model_stack_data.php');
+
+$result_obj = new model_stack_data();
+$result_select = $result_obj->select_stack_data();
+foreach ($result_select as $k => $v) {
+	echo $v['title'];
+	echo '<hr>';
+}
+
+
+$result_insert = $result_obj->insert_query_run();
+echo '<pre>';
+var_dump($result_insert);
+
+exit;
+
+
+
+
+
+
+
+
+
+
 		/*
 		 * ライブラリ
 		 */
