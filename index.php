@@ -1,108 +1,58 @@
 <?php
-
-
-
 /*
 * モデル読み込み
 */
 require_once('./model_stack_data.php');
-
+/*
+* セレクトデータ作成
+*/
 $result_obj = new model_stack_data();
 $result_select = $result_obj->select_stack_data();
-foreach ($result_select as $k => $v) {
-	echo $v['title'];
-	echo '<hr>';
-}
+?>
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>管理ページ</title>
+</head>
+<body>
+
+<table class="table table-bordered  table-striped" style="font-size: 0.5em;">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">商品</th>
+      <th scope="col">カテゴリ</th>
+      <th scope="col" style="width:10px;">画像</th>
+      <th scope="col">URL</th>
+      <th scope="col">登録日</th>
+    </tr>
+  </thead>
+  <tbody>
+		<?php
+			/*
+			* セレクトデータ表示
+			*/
+			foreach ($result_select as $k => $v) {
+				echo '<tr>';
+					echo '<td>' . $v['id'] . '</td>';
+					echo '<td>' . $v['title'] . '</td>';
+					echo '<td>' . $v['category'] . '</td>';
+					echo '<td>' . $v['link_image'] . '</td>';
+					echo '<td>' . $v['link_page'] . '</td>';
+					echo '<td>' . $v['created_at'] . '</td>';
+				echo '</tr>';
+			}
+		?>
+  </tbody>
+</table>
+
+    
+	</body>
+</html>
 
 
-$result_insert = $result_obj->insert_query_run();
-echo '<pre>';
-var_dump($result_insert);
-
-exit;
-
-
-
-
-
-
-
-
-
-
-		/*
-		 * ライブラリ
-		 */
-    require_once('simple_html_dom.php');
-
-		/*
-		 * 取得元URL
-		 */
-		$uri = "https://www.amazon.co.jp/gp/top-sellers/books/ref=crw_ratp_ts_books";
-
-		/*
-		 * 生DOM取得
-		 */
-		$html_str = @file_get_contents($uri);
-
-		/*
-		 * DOMオブジェクトに変換
-		 */
-		$html_array = str_get_html($html_str);
-
-
-		// echo '<pre>';
-		// var_dump($html_array);
-
-		// var_dump($html_str);
-
-		echo '<pre>';
-
-		/*
-		 * それぞれの要素を取得
-		 */
-
-		//仕切り
-		print_r('<hr>');
-
-		//リンク
-		var_dump('http://amazon.co.jp' . $html_array->find("#zg_critical .zg_itemRow a")[0]->href);
-
-		//タイトル
-		var_dump($html_array->find("#zg_critical .zg_itemRow img")[0]->alt);
-
-		//画像（画像URL）
-		var_dump($html_array->find("#zg_critical .zg_itemRow img")[0]->src);
-
-		//評価
- 		var_dump($html_array->find("#zg_critical .zg_itemRow div div div div a i span ")[0]->innertext);
-
-		//仕切り
-		print_r('<hr>');
-
-		//リンク
-		var_dump('http://amazon.co.jp' . $html_array->find(".zg_itemRow a")[2]->href);
-
-		//タイトル
-		var_dump($html_array->find(".zg_itemRow img")[2]->alt);
-
-		//画像（画像URL）
-		var_dump($html_array->find(".zg_itemRow img")[2]->src);
-
-		//評価
- 		var_dump($html_array->find("#zg_critical .zg_itemRow div div div div a i span ")[2]->innertext);
-
-		//仕切り
-		print_r('<hr>');
-
-		//リンク
-		var_dump('http://amazon.co.jp' . $html_array->find(".zg_itemRow a")[4]->href);
-
-		//タイトル
-		var_dump($html_array->find(".zg_itemRow img")[4]->alt);
-
-		//画像（画像URL）
-		var_dump($html_array->find(".zg_itemRow img")[4]->src);
-
-		//評価
- 		var_dump($html_array->find("#zg_critical .zg_itemRow div div div div a i span ")[4]->innertext);
